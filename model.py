@@ -1,6 +1,6 @@
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.optimizers import SGD, Adam, RMSprop, Adadelta
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.optimizers import SGD, Adam, RMSprop, Adadelta
 
 def build_model(input_dim, hidden_layers, neurons, learning_rate, opt_name):
     opts = {

@@ -13,7 +13,8 @@ def preprocess(X, fit=True, encoder_path=None, scaler_path=None):
     num_cols = ['Age', 'Years of Experience']
 
     if fit:
-        enc = OneHotEncoder(sparse=False, handle_unknown='ignore')
+        # Usar sparse_output en lugar de sparse
+        enc = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
         X_cat = enc.fit_transform(X[cat_cols])
         joblib.dump(enc, encoder_path)
 

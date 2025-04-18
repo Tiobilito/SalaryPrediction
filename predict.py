@@ -1,6 +1,6 @@
 import pandas as pd
 from data_preprocessing import load_data, preprocess
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 
 def main():
     df_new = load_data('DATASET-SALARY/prediccion.xlsx')
