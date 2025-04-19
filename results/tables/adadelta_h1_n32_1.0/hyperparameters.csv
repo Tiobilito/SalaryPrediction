@@ -1,0 +1,2 @@
+model_name,learning_rate,epochs,batch_size,hidden_layers,neurons,optimizer,val_mae
+adadelta_h1_n32_1.0,1.0,50,32,1,32,Adadelta,12260.6337890625

@@ -1,0 +1,2 @@
+model_name,learning_rate,epochs,batch_size,hidden_layers,neurons,optimizer,val_mae
+adam_h2_n64_lr001,0.001,100,32,2,64,Adam,58944.73828125

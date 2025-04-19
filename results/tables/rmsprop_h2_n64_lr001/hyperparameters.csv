@@ -1,0 +1,2 @@
+model_name,learning_rate,epochs,batch_size,hidden_layers,neurons,optimizer,val_mae
+rmsprop_h2_n64_lr001,0.001,50,32,2,64,RMSprop,100645.515625
