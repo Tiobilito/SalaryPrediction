@@ -233,3 +233,52 @@ if __name__ == '__main__':
 3. TensorFlow API – https://www.tensorflow.org/api_docs  
 4. Scikit‑Learn Preprocessing – https://scikit-learn.org/stable/modules/preprocessing.html  
 5. Oliva, D. “Tarea 2 – Modelos Predictivos,” Seminario IA II, CUCEI, 2025.
+
+---
+
+## 🚀 Getting Started
+
+Sigue estos pasos para ejecutar el proyecto desde cero:
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/Tiobilito/SalaryPrediction.git
+cd SalaryPrediction
+```
+
+### 2. Crear entorno virtual (usando conda)
+
+```bash
+conda env create -f environment.yml
+conda activate d:\Repositorios\SalaryPrediction\.conda
+```
+
+### 3. Preparar los datos
+
+Coloca tu archivo de **entrenamiento** `prediccion.xlsx` en la carpeta `DATASET-SALARY/`.
+
+El archivo `salarios.csv` (ya incluido de ejemplo) se utiliza para realizar las **predicciones**.
+
+### 4. Entrenar un modelo
+
+```bash
+python main.py train --optimizer Adam --epochs 100 --batch_size 32 --learning_rate 0.001 --hidden_layers 2 --neurons 64
+```
+
+Puedes ajustar los hiperparámetros según lo desees.
+
+> **Nota:**  
+> Después de entrenar el modelo, se exportan automáticamente las **gráficas** (curvas de pérdida, MAE, real vs predicho) en `results/plots/{model_name}/` y las **tablas** de métricas e hiperparámetros en `results/tables/{model_name}/`.
+
+### 5. Realizar predicciones
+
+Coloca tu archivo `salarios.csv` en la carpeta `DATASET-SALARY/` (debe tener las mismas columnas que el set de entrenamiento, excepto la columna objetivo).
+
+Luego ejecuta:
+
+```bash
+python main.py predict --model models/adam_h2_n64_lr001.h5
+```
+
+Los resultados se guardarán en `results/tables/{model_name}/predictions_errors.csv`.
