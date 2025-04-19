@@ -1,30 +1,36 @@
-# SalaryPrediction
- 
-## Resumen Modelos Predictivos
+# 💸 SalaryPrediction
 
-En este reporte comparamos cuatro configuraciones de MLP para regresión salarial, variando optimizador, número de capas ocultas, neuronas, learning rate, épocas y batch size. Para cada modelo:
+## 📊 Resumen Modelos Predictivos
 
-- Se entrenó sobre 368 registros históricos (80/20 split).  
-- Se guardaron curvas de pérdida (MSE) y MAE.  
-- Se calcularon RMSE y MAPE sobre validación.  
-- Finalmente, se predijeron los salarios de 5 empleados nuevos y se cuantificó el error porcentual.
+En este reporte se comparan **cuatro configuraciones** de MLP para regresión salarial, variando optimizador, número de capas ocultas, neuronas, learning rate, épocas y batch size. Para cada modelo:
 
-## Enunciado del Problema
+- Entrenamiento sobre 368 registros históricos (80/20 split)
+- Curvas de pérdida (MSE) y MAE
+- Cálculo de RMSE y MAPE sobre validación
+- Predicción de salarios para 5 empleados nuevos y cuantificación del error porcentual
 
-La empresa TechNova Solutions necesita estimar salarios justos para cinco nuevos ingresos, basándose en datos históricos de empleados actuales y anteriores. Variables consideradas:
+---
 
-- Edad (Age)  
-- Género (Gender)  
-- Nivel educativo (Education Level)  
-- Puesto (Job Title)  
-- Años de experiencia (Years of Experience)  
-- Salario (Salary)
+## 📝 Enunciado del Problema
+
+La empresa **TechNova Solutions** necesita estimar salarios justos para cinco nuevos ingresos, basándose en datos históricos de empleados actuales y anteriores. Variables consideradas:
+
+- **Edad** (`Age`)
+- **Género** (`Gender`)
+- **Nivel educativo** (`Education Level`)
+- **Puesto** (`Job Title`)
+- **Años de experiencia** (`Years of Experience`)
+- **Salario** (`Salary`)
 
 Se plantea un modelo de regresión con redes neuronales MLP que reciba las características, procese y normalice los datos, y arroje una predicción continua de salario.
 
-## Código Utilizado
+---
 
-**data_preprocessing.py**  
+## ⚙️ Código Utilizado
+
+<details>
+<summary><b>data_preprocessing.py</b></summary>
+
 - Carga CSV/XLSX  
 - OneHotEncoding de variables categóricas  
 - StandardScaler de variables numéricas  
@@ -37,8 +43,11 @@ def preprocess(X, fit=True, encoder_path=None, scaler_path=None):
     # ...encoding y escalado...
     return pd.concat([df_num, df_cat], axis=1)
 ```
+</details>
 
-**model.py**  
+<details>
+<summary><b>model.py</b></summary>
+
 - MLP con `hidden_layers` capas ReLU + salida lineal  
 - Compilación con `loss='mse'` y `metrics=['mae']`  
 
@@ -52,9 +61,12 @@ def build_model(input_dim, hidden_layers, neurons, learning_rate, opt_name):
     )
     return model
 ```
+</details>
 
-**train.py**  
-- Argumentos CLI para hiperparámetros:  
+<details>
+<summary><b>train.py</b></summary>
+
+- Argumentos CLI para hiperparámetros  
 - Callbacks: EarlyStopping (val_loss), ModelCheckpoint  
 - Guarda modelo en `models/{model_name}.h5`  
 - Grafica pérdida y MAE en `results/plots/{model_name}/`  
@@ -82,8 +94,11 @@ def train_model(model, X_train, y_train, X_val, y_val, epochs, batch_size, model
     )
     return history
 ```
+</details>
 
-**predict.py**  
+<details>
+<summary><b>predict.py</b></summary>
+
 - Argumento `--model` para elegir `.h5`  
 - Carga `prediccion.xlsx`, aplica mismo preprocesamiento  
 - Guarda predicciones y `% error` en `results/tables/{model_name}/predictions_errors.csv`  
@@ -101,8 +116,11 @@ if __name__ == '__main__':
     })
     df_out.to_csv(out_path, index=False)
 ```
+</details>
 
-## Resultados
+---
+
+## 🏆 Resultados
 
 ### Modelos y Hiperparámetros
 
@@ -113,45 +131,48 @@ if __name__ == '__main__':
 | RMSprop Rápido      | RMSprop     | 2     | 64       | 0.001  | 50     | 32    |
 | Adadelta Ligero     | Adadelta    | 1     | 32       | 1.0    | 50     | 32    |
 
-### 1. Curvas de Pérdida (MSE)
+---
 
-<!-- Inserta aquí:  
-![Pérdida Baseline](results/plots/adam_h2_n64_lr001/adam_h2_n64_lr001_loss.png)  
-![Pérdida Profundo](results/plots/sgd_h3_n128_lr01/sgd_h3_n128_lr01_loss.png)  
-... -->
+### 1️⃣ Curvas de Pérdida (MSE)
 
 #### Adam
 ![Pérdida Adam](results/plots/adam_h2_n64_lr001/adam_h2_n64_lr001_loss.png)
 
-#### Rmsprop
+#### RMSprop
 ![Pérdida Rmsprop](results/plots/rmsprop_h2_n64_lr001/rmsprop_h2_n64_lr001_loss.png)
 
 #### Adadelta
 ![Pérdida Adadelta](results/plots/adadelta_h1_n32_1.0/adadelta_h1_n32_1.0_loss.png)
 
-### 2. Curvas de MAE
+---
+
+### 2️⃣ Curvas de MAE
 
 #### Adam
 ![MAE Adam](results/plots/adam_h2_n64_lr001/adam_h2_n64_lr001_mae.png)  
 
-#### Rmsprop
+#### RMSprop
 ![MAE Rmsprop](results/plots/rmsprop_h2_n64_lr001/rmsprop_h2_n64_lr001_mae.png)
 
 #### Adadelta
 ![MAE Adadelta](results/plots/adadelta_h1_n32_1.0/adadelta_h1_n32_1.0_mae.png)
 
-### 3. Comparación Real vs Predicho
+---
+
+### 3️⃣ Comparación Real vs Predicho
 
 #### Adam
 ![Real vs Predicho Adam](results/plots/adam_h2_n64_lr001/adam_h2_n64_lr001_real_vs_pred.png)  
 
-#### Rmsprop
+#### RMSprop
 ![Real vs Predicho Rmsprop](results/plots/rmsprop_h2_n64_lr001/rmsprop_h2_n64_lr001_real_vs_pred.png) 
 
 #### Adadelta
 ![Real vs Predicho Adadelta](results/plots/adadelta_h1_n32_1.0/adadelta_h1_n32_1.0_real_vs_pred.png)
 
-### 4. Métricas (RMSE, MAPE)
+---
+
+### 4️⃣ Métricas (RMSE, MAPE)
 
 | Modelo                | RMSE           | MAPE (%)         |
 |-----------------------|----------------|------------------|
@@ -159,7 +180,9 @@ if __name__ == '__main__':
 | rmsprop_h2_n64_lr001  | 111 285.15     | 98.57            |
 | adadelta_h1_n32_1.0   | 16 866.73      | 12.10            |
 
-## Predicción Nuevos Empleados
+---
+
+## 👤 Predicción Nuevos Empleados
 
 ### adam_h2_n64_lr001
 
@@ -191,16 +214,19 @@ if __name__ == '__main__':
 | 151920.14        | 160000        | -5.05     |
 | 83957.53         | 90000         | -6.71     |
 
-<!-- Inserta aquí la tabla generada en `results/tables/{model_name}/predictions_errors.csv` -->
+---
 
-## Conclusiones y Observaciones
+## 💡 Conclusiones y Observaciones
 
-- **Rendimiento**: El modelo con _RMSprop_ y configuración base obtuvo el menor MAPE (~7.9 %), seguido de _Adam_.  
-- **Profundidad**: Más capas y neuronas mejoran la capacidad pero requieren más datos/épocas para converger con _SGD_.  
-- **Elección de LR**: Tasas muy altas (Adadelta 1.0) fueron inestables (MAPE alto).  
-- **Aplicabilidad**: La subestimación sistemática sugiere añadir más datos o features (p. ej. ubicación, desempeño).  
+- **Rendimiento:** El modelo con _Adadelta_ y configuración ligera obtuvo el menor MAPE (~12.1 %), seguido de _Adam_.  
+- **Profundidad:** Más capas y neuronas mejoran la capacidad pero requieren más datos/épocas para converger.
+- **Elección de LR:** Tasas muy altas (Adadelta 1.0) pueden ser inestables (MAPE alto).
+- **Aplicabilidad:** La subestimación sistemática sugiere añadir más datos o features (p. ej. ubicación, desempeño).
+- **Limitación:** No se pudo utilizar el optimizador **SGD** debido a que el entrenamiento colapsaba frecuentemente (divergencia o pérdida infinita).
 
-## Referencias
+---
+
+## 📚 Referencias
 
 1. Chollet, F. et al. _Deep Learning with Python_. Manning, 2017.  
 2. Géron, A. _Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow_. O’Reilly, 2019.  
